@@ -1,8 +1,19 @@
-const app = require("fastify")({logger: true});
+const app = require("fastify")({logger: false});
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const {port, db_url} = require("./config/database");
+// Database Variables
+const port = process.env.PORT || 3001;
+const db_url = process.env.DB_URL || "mongodb://localhost:27017/NodeJS-TIT";
+
+app.get("/", async (request, reply) => {
+    const newMod = new Model({
+        title: "test"
+    })
+
+    await newMod.save();
+    reply.send("ok")
+})
 
 mongoose
   .connect(db_url)
@@ -12,11 +23,11 @@ mongoose
         console.error(err);
         process.exit(1);
       }
-      app.log.info(
+      console.log(
         `server is runnig on port ${address} - connected to mongoDB`
       );
     });
   })
   .catch((err) => {
-    app.log.error(`mongoDB connection failed - ${err.message}`);
+    console.log(`mongoDB connection failed - ${err.message}`);
   });
