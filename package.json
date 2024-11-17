@@ -8,8 +8,11 @@
   "keywords": [],
   "author": "hasanabadi.am1380@gmail.com",
   "license": "ISC",
-  "description": "Final project for node js course in Tehran Institute of Technology", 
+  "description": "Final project for node js course in Tehran Institute of Technology",
   "devDependencies": {
     "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "fastify": "^5.1.0"
   }
 }

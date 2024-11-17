@@ -1,1 +1,1 @@
-console.log("ok");
+const app = require("fastify")({logger: true});
