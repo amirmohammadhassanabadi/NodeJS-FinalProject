@@ -1,14 +1,14 @@
 {
   "name": "nodejs-final",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "hasanabadi.am1380@gmail.com",
   "license": "ISC",
-  "description": "",
+  "description": "Final project for node js course in Tehran Institute of Technology", 
   "devDependencies": {
     "nodemon": "^3.1.7"
   }
