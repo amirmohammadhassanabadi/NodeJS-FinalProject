@@ -1,7 +1,4 @@
-exports.testController = (req, rep) => {
-    rep.send("Test controller");
-}
-
-exports.test2Controller = (req, rep) => {
-    rep.send("Test-2 Controller");
+exports.addCategory = (req, rep) => {
+    console.log(req.body.test);
+    rep.send("done");
 }
