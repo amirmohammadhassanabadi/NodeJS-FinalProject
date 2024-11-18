@@ -64,12 +64,10 @@ exports.addSubCategory = async (req, rep) => {
     targeted.subCategory.push(title);
     await targeted.save();
 
-    return rep
-      .status(200)
-      .send({
-        message: "subcategory added successfully",
-        data: newSubCategory,
-      });
+    return rep.status(200).send({
+      message: "subcategory added successfully",
+      data: newSubCategory,
+    });
   } catch (error) {
     return rep
       .status(500)
@@ -94,23 +92,49 @@ exports.addProduct = async (req, rep) => {
     const targetedCategory = await Category.findOne({ title: category });
 
     if (!targetedCategory) {
-        return rep
-        .status(404)
-        .send({ message: "category not found" });
+      return rep.status(404).send({ message: "category not found" });
     }
 
     let newProduct = new Product({
-        title,
-        description,
-        price,
-        category: targetedCategory._id
-    })
+      title: title.toLowerCase(),
+      description: description.toLowerCase(),
+      price: price.toLowerCase(),
+      category: targetedCategory._id,
+    });
 
     newProduct = await newProduct.save();
 
     return rep
       .status(200)
-      .send({ message:"Product successfully added", data: newProduct });
+      .send({ message: "Product successfully added", data: newProduct });
+  } catch (error) {
+    return rep
+      .status(500)
+      .send({ message: `internal error - ${error.message}` });
+  }
+};
+
+exports.searchProduct = async (req, rep) => {
+  try {
+    if (!req.query) {
+      return rep.status(400).send({ message: "request query can not be empty" });
+    }
+
+    const { category, title } = req.query;
+    if (!category || !title) {
+      return rep
+        .status(400)
+        .send({ message: "please prepare the needed info properly" });
+    }
+
+    let products = await Product.find().populate("category");
+    products = products.filter(item => {
+        return item.category == category.toLowerCase() && item.title == title.toLowerCase();
+    });
+
+    return rep
+      .status(200)
+      .send({ message: `process finnished successfully`, data: products });
 
   } catch (error) {
     return rep
