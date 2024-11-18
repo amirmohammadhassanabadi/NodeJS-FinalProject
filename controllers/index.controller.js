@@ -117,7 +117,9 @@ exports.addProduct = async (req, rep) => {
 exports.searchProduct = async (req, rep) => {
   try {
     if (!req.query) {
-      return rep.status(400).send({ message: "request query can not be empty" });
+      return rep
+        .status(400)
+        .send({ message: "request query can not be empty" });
     }
 
     const { category, title } = req.query;
@@ -128,17 +130,50 @@ exports.searchProduct = async (req, rep) => {
     }
 
     let products = await Product.find().populate("category");
-    products = products.filter(item => {
-        return item.category == category.toLowerCase() && item.title == title.toLowerCase();
+    products = products.filter((item) => {
+      return (
+        item.category == category.toLowerCase() &&
+        item.title == title.toLowerCase()
+      );
     });
 
     return rep
       .status(200)
       .send({ message: `process finnished successfully`, data: products });
-
   } catch (error) {
     return rep
       .status(500)
       .send({ message: `internal error - ${error.message}` });
+  }
+};
+
+exports.changeCategoryName = async (req, rep) => {
+  try {
+    if (!req.body) {
+      return rep.status(400).send({ message: "request body can not be empty" });
+    }
+
+    const { current, newCategory } = req.body;
+
+    if (!current || !newCategory) {
+      return rep
+        .status(400)
+        .send({ message: "please prepare the needed info properly" });
+    }
+
+    let category = await Category.findOne({ title: current });
+    if (!category) {
+      return rep.status(404).send({ message: "category not found" });
+    }
+
+    category.title = newCategory;
+    category = await category.save();
+    return rep
+      .status(200)
+      .send({ message: `category name changed successfully`, data: category });
+  } catch (error) {
+    return rep
+    .status(500)
+    .send({ message: `internal error - ${error.message}` });
   }
 };
