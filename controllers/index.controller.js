@@ -28,3 +28,5 @@ exports.addCategory = async (req, rep) => {
         return rep.status(500).send({ message: `internal error - ${error.message}` });
     }
 }
+
+exports.addSubCategory = async (req, rep) => {}
