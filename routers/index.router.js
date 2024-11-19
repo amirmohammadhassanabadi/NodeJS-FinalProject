@@ -48,6 +48,48 @@ module.exports = function (fastify, otps, next) {
     },
     indexController.searchProduct
   );
-  fastify.post("/change-category-name", indexController.changeCategoryName);
+  fastify.put("/change-category-name", {
+    schema: {
+      body: {
+        type: "object",
+        required: ["current", "newCategory"],
+        properties: {
+          current: { type: "string" },
+          newCategory: { type: "string" }
+        },
+      },
+      response: {
+        200: {
+          description: "Successful response",
+          type: "object",
+          properties: {
+            message: { type: "string" },
+            data: { type: "object" },
+          },
+        },
+        400: {
+          description: "Bad request",
+          type: "object",
+          properties: {
+            message: { type: "string" },
+          },
+        },
+        404: {
+          description: "Category not found",
+          type: "object",
+          properties: {
+            message: { type: "string" }
+          }
+        },
+        500: {
+          description: "Internal server error",
+          type: "object",
+          properties: {
+            message: { type: "string" }
+          }
+        }
+      }
+    }
+  }, indexController.changeCategoryName);
   next();
 };
