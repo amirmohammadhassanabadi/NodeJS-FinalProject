@@ -1,11 +1,33 @@
-const app = require("fastify")({logger: false});
+const app = require("fastify")({ logger: false });
 const mongoose = require("mongoose");
 require("dotenv").config();
 
 const indexRouter = require("./routers/index.router");
 
+// Swagger
+app.register(require("@fastify/swagger"));
+app.register(require("@fastify/swagger-ui"), {
+  routePrefix: "/docs",
+  uiConfig: {
+    docExpansion: "full",
+    deepLinking: false,
+  },
+  uiHooks: {
+    onRequest: function (request, reply, next) {
+      next();
+    },
+    preHandler: function (request, reply, next) {
+      next();
+    }
+  },
+  staticCSP: true,
+  transformStaticCSP: (header) => header,
+  transformSpecification: (swaggerObject, request, reply) => {return swaggerObject;},
+  transformSpecificationClone: true
+});
+
 // Router
-app.register(indexRouter, {prefix: "/"})
+app.register(indexRouter, { prefix: "/" });
 
 // Database Variables
 const port = process.env.PORT || 3001;
@@ -19,9 +41,7 @@ mongoose
         console.error(err);
         process.exit(1);
       }
-      console.log(
-        `server is runnig on port ${address} - connected to mongoDB`
-      );
+      console.log(`server is runnig on port ${address} - connected to mongoDB`);
     });
   })
   .catch((err) => {
