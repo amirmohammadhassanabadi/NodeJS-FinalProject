@@ -35,46 +35,6 @@ exports.addCategory = async (req, rep) => {
   }
 };
 
-exports.addSubCategory = async (req, rep) => {
-  try {
-    if (!req.body) {
-      return rep.status(400).send({ message: "request body can not be empty" });
-    }
-
-    const { title, category } = req.body;
-
-    if (!title) {
-      return rep.status(400).send({ message: "title is required" });
-    }
-
-    if (!category) {
-      return rep.status(400).send({ message: "category is required" });
-    }
-
-    const targeted = await Category.findOne({ title: category });
-
-    if (!targeted) {
-      return rep.status(404).send({ message: "category not found" });
-    }
-
-    if (targeted.subCategory.find((item) => item === title)) {
-      return rep.status(404).send({ message: "subcategory already defined" });
-    }
-
-    targeted.subCategory.push(title);
-    await targeted.save();
-
-    return rep.status(200).send({
-      message: "subcategory added successfully",
-      data: newSubCategory,
-    });
-  } catch (error) {
-    return rep
-      .status(500)
-      .send({ message: `internal error - ${error.message}` });
-  }
-};
-
 exports.addProduct = async (req, rep) => {
   try {
     if (!req.body) {
