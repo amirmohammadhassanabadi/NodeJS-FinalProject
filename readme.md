@@ -55,3 +55,8 @@ To start the application, follow these steps:
    ```bash
    http://localhost:3001
    ```
+
+## Test the API
+Use tools like Postman or cURL to test your API endpoints.
+
+Visit (e.g., http://localhost:3000) in a API client.
