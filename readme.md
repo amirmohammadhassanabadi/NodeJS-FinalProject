@@ -60,3 +60,24 @@ To start the application, follow these steps:
 Use tools like Postman or cURL to test your API endpoints.
 
 Visit (e.g., http://localhost:3000) in a API client.
+
+## Endpoints and Usage
+
+### 1. **Add Category**
+**Endpoint:** `POST     /add-category`  
+**Description:** Adds a new category to the database.  
+**Request Body:**
+```json
+{
+  "title": "Electronics",
+  "description": "Devices and gadgets",
+  "subCategory": ["Phones", "Laptops"]
+}
+```
+
+**Response:**
+
+* **200 OK:** Category added successfully.
+* **400 Bad Request:** Request body is empty or missing required fields.
+* **409 Conflict:** Category already exists.
+* **500 Internal Server Error:** Indicates an unexpected error occurred on the server
