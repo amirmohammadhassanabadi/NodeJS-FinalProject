@@ -66,11 +66,62 @@ module.exports = function (fastify, otps, next) {
     },
     indexController.addCategory
   );
-  fastify.post("/add-product", indexController.addProduct);
+  fastify.post("/add-product", {
+    schema: {
+      description: "Add a new product",
+      body: {
+        type: "object",
+        required: ["title", "price", "category" ],
+        properties: {
+          title: {
+            type: "string",
+          },
+          price: {
+            type: "string",
+          },
+          category: {
+            type: "string",
+          },
+        },
+      },
+      response: {
+        200: {
+          description: "Successful response",
+          type: "object",
+          properties: {
+            message: { type: "string" },
+            data: { type: "object" },
+          },
+        },
+        400: {
+          description: "Bad request",
+          type: "object",
+          properties: {
+            message: { type: "string" },
+          },
+        },
+        404: {
+          description: "Category not found",
+          type: "object",
+          properties: {
+            message: { type: "string" },
+          },
+        },
+        500: {
+          description: "Internal server error",
+          type: "object",
+          properties: {
+            message: { type: "string" },
+          },
+        },
+      },
+    },
+  }, indexController.addProduct);
   fastify.get(
     "/search-product",
     {
       schema: {
+        description: "search inside a category",
         querystring: {
           type: "object",
           required: ["category", "title"],
@@ -90,7 +141,7 @@ module.exports = function (fastify, otps, next) {
             type: "object",
             properties: {
               message: { type: "string" },
-              data: { type: "array" },
+              data: { type: "object" },
             },
           },
           400: {
@@ -116,6 +167,7 @@ module.exports = function (fastify, otps, next) {
     "/change-category-name",
     {
       schema: {
+        description: "change the name of a category",
         body: {
           type: "object",
           required: ["current", "newCategory"],
