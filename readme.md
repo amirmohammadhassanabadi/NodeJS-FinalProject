@@ -1,4 +1,4 @@
-# Node.js Fastify Project with MongoDB
+# Node.js Final Project
 
 This project is a **Node.js** application built with the **Fastify** framework and **MongoDB** as the database.
 
@@ -10,6 +10,7 @@ Before you begin, ensure you have the following installed:
 
 - **Node.js**: [Download Node.js](https://nodejs.org/)
 - **npm**: Comes with Node.js (verify with `npm -v`)
+- **Git**: [Download Git](https://git-scm.com/downloads)
 - **MongoDB**:
   - **Option 1**: [Install MongoDB locally](https://www.mongodb.com/try/download/community).
   - **Option 2**: Use [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) for a cloud-based solution.
@@ -108,7 +109,7 @@ Visit (e.g., http://localhost:3000) in a API client.
 
 ### 3. **Search Product**
 
-**Endpoint:** `GET /products/search`  
+**Endpoint:** `GET /search-product`  
 **Description:** Searches for products by title and category.  
 **Query Parameters:**
 
@@ -116,12 +117,45 @@ Visit (e.g., http://localhost:3000) in a API client.
 - `category`: The category of the product (case-insensitive).
 
 **Example Request:**  
-`GET /products/search?title=iphone 16&category=electronics`
+`GET /search-product?title=iphone 16&category=electronics`
 
 **Response:**
 
 - **200 OK:** Returns the list of matching products.  
 - **400 Bad Request:** Missing query parameters.  
 - **500 Internal Server Error:** An error occurred while searching.
+
+---
+
+### 4. **Change Category Name**
+
+**Endpoint:** `PUT /change-category-name`  
+**Description:** Updates the name of an existing category.  
+**Request Body:**
+```json
+{
+  "current": "Electronics",
+  "newCategory": "Gadgets"
+}
+```
+
+**Response:**
+
+* **200 OK:** Returns the list of matching products.  
+* **400 Bad Request:** Missing query parameters.  
+* **404 Not Found:** Specified category not found.
+* **500 Internal Server Error:** An error occurred while searching.
+
+---
+
+## Conclusion
+
+This project provides a simple yet effective way to manage categories and products. Feel free to extend or modify the API to suit your requirements. If you encounter any issues or have suggestions for improvement, contributions are welcome!
+
+---
+
+## Contributions and Feedback
+
+We welcome contributions! If you'd like to contribute to this project, feel free to fork the repository and submit a pull request. For any feedback, questions, or issues, please open an issue in the repository or contact us directly.
 
 ---
