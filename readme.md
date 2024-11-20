@@ -81,3 +81,47 @@ Visit (e.g., http://localhost:3000) in a API client.
 * **400 Bad Request:** Request body is empty or missing required fields.
 * **409 Conflict:** Category already exists.
 * **500 Internal Server Error:** Indicates an unexpected error occurred on the server
+
+---
+
+### 2. **Add Product**
+**Endpoint:** `POST     /add-product`  
+**Description:** Adds a new product to the database.  
+**Request Body:**
+```json
+{
+  "title": "iPhone 16",
+  "description": "Latest Apple smartphone",
+  "price": "999",
+  "category": "Electronics"
+}
+```
+
+**Response:**
+
+* **200 OK:** Category added successfully.
+* **400 Bad Request:** Request body is empty or missing required fields.
+* **404 Not Found:** Category for the product not found.
+* **500 Internal Server Error:** Indicates an unexpected error occurred on the server.
+
+---
+
+### 3. **Search Product**
+
+**Endpoint:** `GET /products/search`  
+**Description:** Searches for products by title and category.  
+**Query Parameters:**
+
+- `title`: The title of the product (case-insensitive).  
+- `category`: The category of the product (case-insensitive).
+
+**Example Request:**  
+`GET /products/search?title=iphone 16&category=electronics`
+
+**Response:**
+
+- **200 OK:** Returns the list of matching products.  
+- **400 Bad Request:** Missing query parameters.  
+- **500 Internal Server Error:** An error occurred while searching.
+
+---
