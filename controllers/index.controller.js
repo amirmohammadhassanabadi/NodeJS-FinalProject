@@ -12,6 +12,10 @@ exports.addCategory = async (req, rep) => {
       return rep.status(400).send({ message: "Title is required" });
     }
 
+    if (subCategory && !Array.isArray(subCategory)) {
+      return rep.status(400).send({ message: "subCategory should be an array" });
+    }
+
     const targeted = await Category.findOne({ title: title });
     if (targeted) {
       return rep.status(409).send({ message: "category already defined" });
