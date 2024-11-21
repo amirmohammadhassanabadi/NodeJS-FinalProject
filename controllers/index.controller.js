@@ -2,6 +2,8 @@ const { Category } = require("../models/category.model");
 const { Product } = require("../models/product.model");
 
 exports.addCategory = async (req, rep) => {
+  console.log("recieved");
+  
   try {
     if (!req.body) {
       return rep.status(400).send({ message: "request body can not be empty" });

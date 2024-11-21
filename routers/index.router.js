@@ -17,20 +17,6 @@ module.exports = function (fastify, otps, next) {
             }
           },
         },
-        // parameters: {
-        //   in: "body",
-        //   name: "add-category",
-        //   description: "Add a new category",
-        //   schema: {
-        //     type: "object",
-        //     required: ["title"],
-        //     properties: {
-        //       title: {type: "string"},
-        //       description: {type: "string"},
-        //       subCategory: {type: "array"}
-        //     }
-        //   }
-        // },
         response: {
           200: {
             description: "Successful response",
