@@ -14,9 +14,9 @@ exports.addCategory = async (req, rep) => {
       return rep.status(400).send({ message: "Title is required" });
     }
 
-    if (subCategory && !Array.isArray(subCategory)) {
-      return rep.status(400).send({ message: "subCategory should be an array" });
-    }
+    // if (subCategory && !Array.isArray(subCategory)) {
+    //   return rep.status(400).send({ message: "subCategory should be an array" });
+    // }
 
     const targeted = await Category.findOne({ title: title });
     if (targeted) {
@@ -30,7 +30,7 @@ exports.addCategory = async (req, rep) => {
     });
 
     newCategory = await newCategory.save();
-
+    
     return rep
       .status(200)
       .send({ message: "category added successfully", data: newCategory });
@@ -62,9 +62,9 @@ exports.addProduct = async (req, rep) => {
     }
 
     let newProduct = new Product({
-      title: title.toLowerCase(),
-      description: description.toLowerCase(),
-      price: price.toLowerCase(),
+      title: title,
+      description: description,
+      price: price,
       category: targetedCategory._id,
     });
 
@@ -98,8 +98,8 @@ exports.searchProduct = async (req, rep) => {
     let products = await Product.find().populate("category");
     products = products.filter((item) => {
       return (
-        item.category == category.toLowerCase() &&
-        item.title == title.toLowerCase()
+        item.category.title == category &&
+        item.title == title
       );
     });
 
